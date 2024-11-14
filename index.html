@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Jost', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.6); /* White overlay with 60% opacity */
+            z-index: 1;
+        }
+        .main {
+            display: flex;
+            flex-direction: column; /* Arrange in column manner */
+            align-items: center;
+            gap: 2rem;
+            width: 100%; /* Full width */
+            max-width: 800px; /* Increased maximum width */
+            padding: 3rem;
+            background: white;
+            border-radius: 1rem; /* Increased border radius */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            z-index: 2; /* Ensure the main container is above the overlay */
+        }
+        .main:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        .animate {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .signup, .login {
+            width: 100%; /* Full width for both sections */
+            padding: 1.5rem; /* Increased padding */
+            border-radius: 1rem;
+        }
+        .signup {
+            background-color: #e0f7fa; /* Light cyan background */
+        }
+        .login {
+            background-color: #ffecb3; /* Light yellow background */
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="main">
+        <input type="checkbox" id="chk" aria-hidden="true" class="hidden">
+
+        <div class="signup animate flex flex-col gap-4">
+            <form id="signup-form" class="w-full">
+                <label for="chk" aria-hidden="true" class="text-2xl font-semibold text-blue-600">Sign up</label>
+                <input type="text" id="signup-username" placeholder="User name" required class="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="email" id="signup-email" placeholder="Email" required class="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="password" id="signup-password" placeholder="Password" required class="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded transition-all duration-300 ease-in-out transform hover:scale-105">Sign up</button>
+            </form>
+        </div>
+
+        <div class="login animate flex flex-col gap-4">
+            <form id="login-form" class="w-full">
+                <label for="chk" aria-hidden="true" class="text-2xl font-semibold text-green-600">Login</label>
+                <input type="text" id="login-username" placeholder="User name" required class="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+                <input type="password" id="login-password" placeholder="Password" required class="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-5 rounded transition-all duration-300 ease-in-out transform hover:scale-105">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('signup-username').value;
+            const password = document.getElementById('signup-password').value;
+            // Save username and password in localStorage
+            localStorage.setItem(username, password);
+            alert('Sign up successful! You can now log in.');
+        });
+
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            // Retrieve the stored password for the entered username
+            const storedPassword = localStorage.getItem(username);
+            if (storedPassword && storedPassword === password) {
+                alert('Login successful!');
+                // Redirect to page1.html
+                window.location.href = 'page1.html';
+            } else {
+                alert('Invalid username or password. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
