@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Tour Booking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Jost', sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            color: #555;
+        }
+        input, select, button {
+            font-size: 1em;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-width: 400px;
+        }
+        input[type="text"].custom-duration {
+            display: none;
+        }
+        button {
+            background-color: #0072ff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #005bb5;
+        }
+        #confirmation {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: green;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>City Tour Booking</h1>
+        <p>Book the bus seat and trace your location for the full day with us. Enjoy a seamless travel experience in Maharashtra's beautiful cities. Enter the name of the city and select the duration of your tour. We'll send you the confirmation about prices and all the details to your email.</p>
+        <input type="text" id="city-name" placeholder="Enter City Name" required>
+        <select id="tour-duration" onchange="toggleCustomInput()">
+            <option value="1 day">1 day</option>
+            <option value="2 days">2 days</option>
+            <option value="3 days">3 days</option>
+            <option value="Custom">Custom</option>
+        </select>
+        <input type="text" id="custom-duration" class="custom-duration" placeholder="Enter Custom Duration">
+        <button onclick="submitTour()">Submit</button>
+        <div id="confirmation">Details are sent to your email.</div>
+    </div>
+    <script>
+        function toggleCustomInput() {
+            const durationSelect = document.getElementById('tour-duration');
+            const customInput = document.getElementById('custom-duration');
+            if (durationSelect.value === 'Custom') {
+                customInput.style.display = 'block';
+            } else {
+                customInput.style.display = 'none';
+            }
+        }
+
+        function submitTour() {
+            const cityName = document.getElementById('city-name').value;
+            const durationSelect = document.getElementById('tour-duration');
+            let tourDuration = durationSelect.value;
+
+            if (!cityName) {
+                alert("Please enter the city name.");
+                return;
+            }
+
+            if (tourDuration === "Custom") {
+                tourDuration = document.getElementById('custom-duration').value;
+                if (!tourDuration) {
+                    alert("Please enter a valid custom duration.");
+                    return;
+                }
+            }
+
+            document.getElementById('confirmation').innerText = `Details for ${cityName} for ${tourDuration} are sent to your email.`;
+            document.getElementById('confirmation').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
